@@ -45,6 +45,7 @@ def get_left_tweets(num):
     for user in pd.read_csv('../data/left_account_list.csv').left:
         twitter_client = TwitterClient(user)
         try:
+            print("Getting Tweets for: "+ user)
             tweets = twitter_client.get_user_timeline_tweets(num)
             for tweet in tweets:
                 left_tweets.append(tweet)
@@ -57,7 +58,7 @@ def get_left_tweets(num):
 
 if __name__=='__main__':
     count = 1000
-    get_right_tweets(count)
-    #get_left_tweets(count)
+    #get_right_tweets(count)
+    get_left_tweets(count)
     pass
 
