@@ -67,7 +67,7 @@ def on_epoch_end(epoch, _):
 
                 sys.stdout.write(next_char)
                 sys.stdout.flush()
-            with open('../data/raw_generated_text_aws.txt', "a+") as f:
+            with open('../data/raw_generated_right_tweets.txt', "a+") as f:
                 f.write(generated[maxlen:]+"\n")
             print()
     else:
@@ -104,7 +104,7 @@ def spit_out_text():
 
             sys.stdout.write(next_char)
             sys.stdout.flush()
-        with open('../data/raw_generated_text_aws.txt', "a+") as f:
+        with open('../data/raw_generated_right_tweets.txt', "a+") as f:
               f.write(generated[maxlen:]+"\n")
         print()
 
