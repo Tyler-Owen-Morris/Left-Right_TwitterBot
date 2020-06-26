@@ -110,7 +110,7 @@ def spit_out_text():
 
 # ***************** EVERYTHING BELOW HERE RUNS AFTER ALL FUNCTIONS AND DATA HAVE BEEN LOADED ****************
 
-processed_text = tweet_string.lower()
+processed_text = tweet_string.lower().replace('\r','').replace('%','').replace('(','').replace(')','').replace('*','').replace('/','').replace('\\','').replace('[','').replace(']','').replace('^','').replace('_','').replace('`','').replace('~','')
 processed_text = re.sub(r'[^\x00-\x7f]',r'', processed_text)
 chars = sorted(list(set(processed_text)))
 print(chars)
