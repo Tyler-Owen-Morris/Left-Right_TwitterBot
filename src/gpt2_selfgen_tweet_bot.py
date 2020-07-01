@@ -42,7 +42,7 @@ def generate_trending_tweet():
                     steps=100,
                     restore_from='fresh',
                     run_name=topic,
-                    print_every=10,
+                    print_every=1,
                     save_every=50)
     else:
         #update existing model
@@ -52,7 +52,7 @@ def generate_trending_tweet():
                     model_name=model_name,
                     steps=100,
                     restore_from=topic,
-                    print_every=10,
+                    print_every=1,
                     save_every=50)
     #generate tweet
     print("beginning to generate tweets...")
