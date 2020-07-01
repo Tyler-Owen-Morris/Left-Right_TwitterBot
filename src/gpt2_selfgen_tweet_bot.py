@@ -26,7 +26,7 @@ def generate_trending_tweet():
     print("generating topical tweets on subject: "+ topic)
     #update the text file with current tweets
     file_name = '../data/topic_tweets/'+topic+'.txt'
-    topical_tweets = get_topic_tweets(topic, 10000)
+    topical_tweets = get_topic_tweets(topic, 2500)
     t_tweet_string = "\n\n".join(topical_tweets)
     with open(file_name, 'w') as f:
         f.write(t_tweet_string)
@@ -68,7 +68,7 @@ def generate_trending_tweet():
     tweets = []
     for text in texts:
         tweet = text.split('\n\n')[0]
-        if len(tweet) > len(topic):
+        if len(tweet) > len(topic)+2:
             tweets.append(tweet)
     return choice(tweets)
 
