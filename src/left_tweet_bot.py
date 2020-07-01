@@ -16,7 +16,10 @@ def do_bot_things():
     while True:
         tweet = gen_ts.tweets.sample(1).values[0]
         print("Preparing to tweet this nugget of genius:\n"+tweet)
-        api.update_status(tweet)
+        try:
+            api.update_status(tweet)
+        except:
+            continue
         sleep_time = (35*60) + randint(-20,20)*60
         print("Going to sleep for "+str(sleep_time/60)+" minutes")
         time.sleep(sleep_time)
