@@ -27,7 +27,7 @@ def generate_trending_tweet():
     #update the text file with current tweets
     file_name = '../data/topic_tweets/'+topic+'.txt'
     topical_tweets = get_topic_tweets(topic, 2500)
-    t_tweet_string = "\n\n".join(topical_tweets)
+    t_tweet_string = " || ".join(topical_tweets)
     with open(file_name, 'w') as f:
         f.write(t_tweet_string)
     #train model
@@ -39,7 +39,7 @@ def generate_trending_tweet():
         gpt2.finetune(sess,
                     dataset=file_name,
                     model_name=model_name,
-                    steps=1000,
+                    steps=100,
                     restore_from='fresh',
                     run_name=topic,
                     print_every=10,
@@ -50,7 +50,7 @@ def generate_trending_tweet():
         gpt2.finetune(sess,
                     dataset=file_name,
                     model_name=model_name,
-                    steps=200,
+                    steps=100,
                     restore_from=topic,
                     print_every=10,
                     save_every=50)
@@ -67,7 +67,7 @@ def generate_trending_tweet():
         texts = f.read().split('====================')
     tweets = []
     for text in texts:
-        tweet = text.split('\n\n')[0]
+        tweet = text.split(' || ')[0]
         if len(tweet) > len(topic)+2:
             tweets.append(tweet)
     return choice(tweets)
