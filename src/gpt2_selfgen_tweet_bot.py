@@ -39,7 +39,7 @@ def generate_trending_tweet():
         gpt2.finetune(sess,
                     dataset=file_name,
                     model_name=model_name,
-                    steps=100,
+                    steps=200,
                     restore_from='fresh',
                     run_name=topic,
                     print_every=1,
@@ -96,7 +96,7 @@ def get_trending():
     return trending
 
 def get_topic_tweets(topic, max_tweets=100):
-    searched_tweets = [status for status in Cursor(api.search, q=topic, lang='en', tweet_mode='extended').items(max_tweets)]
+    searched_tweets = [status for status in Cursor(api.search, q=topic+" -filter:retweets", lang='en', tweet_mode='extended').items(max_tweets)]
     found_tweets=[]
     for tweet in searched_tweets:
         try:
