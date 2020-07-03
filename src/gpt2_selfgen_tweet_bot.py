@@ -71,7 +71,7 @@ def generate_trending_tweet():
         tweet = text.split(' || ')[0]
         if len(tweet) > len(topic)+2:
             tweets.append(tweet)
-    print("Potential tweets:\n"+ tweets)
+    print("Potential tweets:\n"+ " \n\n ".join(tweets))
     tweet = choice(tweets)
     if len(tweet) > 280:
         tweet = tweet[:280]
