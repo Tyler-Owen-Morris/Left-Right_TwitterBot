@@ -23,7 +23,7 @@ print("model loaded")
 def generate_trending_tweet():
     trending = get_trending()
     topic = choice(trending)
-    topic = '#mondaythoughts' #this is just for testing repeat topics- remove before deployment
+    #topic = '#mondaythoughts' #this is just for testing repeat topics- remove before deployment
     print("generating topical tweets on subject: "+ topic)
 
     #update the text file with current tweets
@@ -40,6 +40,12 @@ def generate_trending_tweet():
 
     #train model
     print("training new model on scraped text for topic : "+topic)
+    if 'sess' in locals():
+        print("clearing session variable...")
+        sess = None
+        del sess
+    else:
+        print("no session found- initializing tensorflow session...")
     sess = gpt2.start_tf_sess()
     if not os.path.exists('checkpoint/'+topic):
         #train fresh model
