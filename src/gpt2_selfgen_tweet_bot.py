@@ -23,7 +23,7 @@ print("model loaded")
 def generate_trending_tweet():
     trending = get_trending()
     topic = choice(trending)
-    topic = '#mondaythoughts' #this is just for testing repeat topics- remove before deployment
+    #topic = '#mondaythoughts' #this is just for testing repeat topics- remove before deployment
     print("generating topical tweets on subject: "+ topic)
 
     #update the text file with current tweets
@@ -71,6 +71,7 @@ def generate_trending_tweet():
                         run_name=topic, 
                         prefix=topic)
     print('done generating tweets... ')
+    gpt2.reset_session(sess=sess) #reset the session to prevent errors on loop
     #return 1 tweet
     with open('../data/generated_tweets.txt','r') as f:
         texts = f.read().split('====================')
@@ -85,7 +86,6 @@ def generate_trending_tweet():
     tweet = choice(tweets)
     if len(tweet) > 280:
         tweet = tweet[:280]
-    gpt2.reset_session(sess=sess) #reset the session to prevent errors on loop
     return tweet
 
 def choose_and_clean_tweet(tweets):
@@ -127,7 +127,7 @@ def run_bot():
     while True:
         tweet = generate_trending_tweet()
         print("I am tweeting : "+tweet)
-        #api.update_status(tweet)
+        api.update_status(tweet)
 
         sleep_time = (11*60) + randint(-10,3)*60
         print("Going to sleep for "+str(sleep_time/60)+" minutes")
