@@ -23,13 +23,21 @@ print("model loaded")
 def generate_trending_tweet():
     trending = get_trending()
     topic = choice(trending)
+    topic = '#mondaythoughts' #this is just for testing repeat topics- remove before deployment
     print("generating topical tweets on subject: "+ topic)
+
     #update the text file with current tweets
     file_name = '../data/topic_tweets/'+topic+'.txt'
     topical_tweets = get_topic_tweets(topic, 2500)
     t_tweet_string = " || ".join(topical_tweets)
-    with open(file_name, 'w') as f:
-        f.write(t_tweet_string)
+
+    if os.path.exists(file_name):
+        with open(file_name, 'a+') as f:
+            f.write(t_tweet_string)
+    else:
+        with open(file_name, 'w') as f:
+            f.write(t_tweet_string)
+
     #train model
     print("training new model on scraped text for topic : "+topic)
     sess = gpt2.start_tf_sess()
@@ -42,18 +50,17 @@ def generate_trending_tweet():
                     steps=200,
                     restore_from='fresh',
                     run_name=topic,
-                    print_every=1,
-                    save_every=50)
+                    print_every=1)
     else:
         #update existing model
         print("updating existing model with short run on new tweets...")
         gpt2.finetune(sess,
                     dataset=file_name,
                     model_name=model_name,
+                    run_name=topic,
                     steps=100,
-                    restore_from=topic,
-                    print_every=1,
-                    save_every=50)
+                    restore_from='latest',
+                    print_every=1)
     #generate tweet
     print("beginning to generate tweets...")
     gpt2.generate_to_file(sess, 
@@ -68,7 +75,9 @@ def generate_trending_tweet():
         texts = f.read().split('====================')
     tweets = []
     for text in texts:
-        tweet = text.split(' || ')[0]
+        tweet = text.split(' || ')[0] # by just taking the first tweet, we're sure we have the seed text
+        tweet = tweet.split(" ")
+        tweet = " ".join(word for word in tweet if not has_prefix(word))
         if len(tweet) > len(topic)+2:
             tweets.append(tweet)
     #print("Potential tweets:\n"+ " \n\n ".join(tweets))
@@ -121,6 +130,7 @@ def run_bot():
         sleep_time = (11*60) + randint(-10,3)*60
         print("Going to sleep for "+str(sleep_time/60)+" minutes")
         time.sleep(sleep_time)
+    print("exited loop somehow...")
 
 if __name__ == "__main__":
     run_bot()
