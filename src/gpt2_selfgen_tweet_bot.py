@@ -77,11 +77,15 @@ def generate_trending_tweet():
         texts = f.read().split('====================')
     tweets = []
     for text in texts:
-        tweet = text.split(' || ')[0] # by just taking the first tweet, we're sure we have the seed text
-        tweet = tweet.split(" ")
-        tweet = " ".join(word for word in tweet if not has_prefix(word))
-        if len(tweet) > len(topic)+2:
-            tweets.append(tweet)
+        tweets = text.split(' || ') # by just taking the first tweet, we're sure we have the seed text
+        for tweet in tweets:
+            if topic in tweet:
+                tweet = tweet.split(" ")
+                tweet = " ".join(word for word in tweet if not has_prefix(word))
+                if len(tweet) > len(topic)+2:
+                    tweets.append(tweet)
+            else:
+                continue
     #print("Potential tweets:\n"+ " \n\n ".join(tweets))
     tweet = choice(tweets)
     if len(tweet) > 280:
