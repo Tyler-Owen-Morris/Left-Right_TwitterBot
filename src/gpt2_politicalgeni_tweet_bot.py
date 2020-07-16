@@ -24,8 +24,6 @@ print("model loaded")
 def generate_trending_tweet():
     trending = get_trending()
     topic = choice(trending)
-    # this is just for testing repeat topics- remove before deployment
-    topic = '#mondaythoughts'
     print("generating topical tweets on subject: " + topic)
 
     # update the text file with current tweets
@@ -50,7 +48,7 @@ def generate_trending_tweet():
         gpt2.finetune(sess,
                       dataset=file_name,
                       model_name=model_name,
-                      steps=2,
+                      steps=200,
                       restore_from='fresh',
                       run_name=topic,
                       print_every=1)
@@ -61,7 +59,7 @@ def generate_trending_tweet():
                       dataset=file_name,
                       model_name=model_name,
                       run_name=topic,
-                      steps=1,
+                      steps=100,
                       restore_from='latest',
                       print_every=1)
     # generate tweet
@@ -145,7 +143,7 @@ def run_bot():
         print("I am tweeting : "+tweet)
         api.update_status(tweet)
 
-        sleep_time = (11*60) + randint(-10, 3)*60
+        sleep_time = (1*60) + randint(0, 3)*60
         print("Going to sleep for "+str(sleep_time/60)+" minutes")
         time.sleep(sleep_time)
     print("exited loop somehow...")

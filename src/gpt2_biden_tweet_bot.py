@@ -22,10 +22,9 @@ print("model loaded")
 
 
 def generate_trending_tweet():
-    topics = ["biden", "trump"]
+    topics = ["Biden", "Trump"]
     topic = choice(topics)
     # this is just for testing repeat topics- remove before deployment
-    topic = '#mondaythoughts'
     print("generating topical tweets on subject: " + topic)
 
     # update the text file with current tweets
@@ -99,17 +98,6 @@ def generate_trending_tweet():
     return tweet
 
 
-def choose_and_clean_tweet(tweets):
-    idx = randrange(0, len(tweets))
-    tweet = tweets.pop(idx).split(" ")
-    tweet = " ".join(word for word in tweet if not has_prefix(word))
-    print("before shortening"+tweet)
-    if len(tweet) > 280:
-        tweet = tweet[:280]
-    print("after shortening: "+tweet)
-    return tweet
-
-
 def get_trending():
     trends = api.trends_place(id=23424977)  # this is the code for USA
     trending = []
@@ -145,7 +133,7 @@ def run_bot():
         print("I am tweeting : "+tweet)
         api.update_status(tweet)
 
-        sleep_time = (11*60) + randint(-10, 3)*60
+        sleep_time = (1*60) + randint(0, 3)*60
         print("Going to sleep for "+str(sleep_time/60)+" minutes")
         time.sleep(sleep_time)
     print("exited loop somehow...")
