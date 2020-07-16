@@ -28,16 +28,12 @@ def generate_trending_tweet():
     print("generating topical tweets on subject: " + topic)
 
     # update the text file with current tweets
-    file_name = '../data/topic_tweets/'+topic+'.txt'
+    file_name = '../data/'+topic+'.txt'
     topical_tweets = get_topic_tweets(topic, 2500)
     t_tweet_string = " || ".join(topical_tweets)
 
-    if os.path.exists(file_name):
-        with open(file_name, 'a+') as f:
-            f.write(t_tweet_string)
-    else:
-        with open(file_name, 'w') as f:
-            f.write(t_tweet_string)
+    with open(file_name, 'w') as f:
+        f.write(t_tweet_string)
 
     # train model
     print("training new model on scraped text for topic : "+topic)
