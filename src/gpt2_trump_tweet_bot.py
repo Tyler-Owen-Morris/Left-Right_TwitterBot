@@ -8,7 +8,7 @@ import os
 from random import randint, randrange, choice
 import gpt_2_simple as gpt2
 
-import twitter_credentials_biden as tc
+import twitter_credentials_trump as tc
 
 auth = OAuthHandler(tc.CONSUMER_KEY, tc.CONSUMER_SECRET)
 auth.set_access_token(tc.ACCESS_TOKEN, tc.ACCESS_TOKEN_SECRET)
@@ -106,9 +106,9 @@ def get_trending():
 
 def get_topic_tweets(topic, max_tweets=100):
     if topic == "Trump":
-        sentiment = " :("
-    else:
         sentiment = " :)"
+    else:
+        sentiment = " :("
     query = topic + sentiment + " -filter:retweets"
     print("using twitter api query: " + query)
     searched_tweets = [status for status in Cursor(
