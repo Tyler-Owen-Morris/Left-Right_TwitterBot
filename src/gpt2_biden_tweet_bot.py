@@ -109,7 +109,7 @@ def get_topic_tweets(topic, max_tweets=100):
         sentiment = " :("
     else:
         sentiment = " :)"
-    query = topic + sentiment + " -filter:retweets"
+    query = topic + " -filter:retweets" + sentiment
     print("using twitter api query: " + query)
     searched_tweets = [status for status in Cursor(
         api.search, q=query, lang='en', tweet_mode='extended').items(max_tweets)]
@@ -135,10 +135,6 @@ def run_bot():
         tweet = generate_trending_tweet()
         print("I am tweeting : "+tweet)
         api.update_status(tweet)
-
-        sleep_time = (1*60) + randint(0, 3)*60
-        print("Going to sleep for "+str(sleep_time/60)+" minutes")
-        time.sleep(sleep_time)
     print("exited loop somehow...")
 
 
