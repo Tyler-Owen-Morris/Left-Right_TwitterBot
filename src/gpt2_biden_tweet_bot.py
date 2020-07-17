@@ -104,8 +104,14 @@ def get_trending():
 
 
 def get_topic_tweets(topic, max_tweets=100):
+    if topic == "Trump":
+        sentiment = " :("
+    else:
+        sentiment = " :)"
+    query = topic+sentiment+" -filter:retweets"
+    print("using twitter api query: " + query)
     searched_tweets = [status for status in Cursor(
-        api.search, q=topic+" -filter:retweets", lang='en', tweet_mode='extended').items(max_tweets)]
+        api.search, q=query, lang='en', tweet_mode='extended').items(max_tweets)]
     found_tweets = []
     for tweet in searched_tweets:
         try:
