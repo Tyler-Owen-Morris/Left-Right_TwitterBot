@@ -109,7 +109,7 @@ def get_topic_tweets(topic, max_tweets=100):
         sentiment = " :("
     else:
         sentiment = " :)"
-    query = topic + " -filter:retweets" + sentiment
+    query = topic + sentiment
     print("using twitter api query: " + query)
     searched_tweets = [status for status in Cursor(
         api.search, q=query, lang='en', tweet_mode='extended').items(max_tweets)]
